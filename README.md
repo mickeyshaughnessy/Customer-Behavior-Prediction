@@ -12,7 +12,7 @@ pages (2b) visited.
 Strategy 2b has the greatest area under the precision - recall curve, so this one is the
 best of the three. Its results marking the test.csv data are in predict2b.dat. 
 
-The files predict* are generated using the indicated strategies, marking the final 
+The files 'predict*' are generated using the indicated strategies, marking the final 
 element of each line with a number between 0 and 1. This number represents the predicted 
 probability of buy - 1 is a certain buy, 0 is a certain no buy. To convert to a binary 
 classification, simply select a threshold between 0 and 1. Then mark the lines with p_buy 
