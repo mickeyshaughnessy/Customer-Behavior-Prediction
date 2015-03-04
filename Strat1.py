@@ -1,19 +1,17 @@
 # This script takes the .csv training data and labels
 # test data with p_buy = {0,1}. 
-# The data is given as 8 sequential pairs of site - time spent (s)
+
+# The input data is given as 8 sequential pairs of site - time spent (s)
 # followed by a 0 (no buy) or 1 (buy)
 
-#strategies:
+# Strategies:
 
-# 1. Plot total time spent vs. p_buy and come up with rough rule
+# 1. Plot total time spent vs. p_buy and come up with rough rule (this script)
 
 # 2a. for each page compute p(b|p) = prob buy given page in history
 # then compute p(b|p') = prob buy given page ensemble
-
 # 2b. compute p(b|p-p-p) = prob buy given page-page-page pattern
-
-# 2a and 2b are implemented in the Strat2.py script - this one implements
-# strategy 1.
+# (implemented in Strat2.py)
 
 import pylab
 import operator
@@ -32,15 +30,18 @@ with open('train.csv') as f:
         data.append(struct)
 # data is in format: 
 # [[(page, time), (page, time), ... (buy/no_buy)], [(page,time),...]]  
-# yum!
 
 
-#Strategy 1 - total time spent:
+#Strategy 1 - Total Time Spent - construct tot_times object:
+
 tot_times = {}
 for line in data:
+    # The line object is a sequence of pages the customer visits
+    # For each sequence the total time is computed and then
+    # The True/False buy value is added to a histogram for that time bin (say 34 seconds)
     tot_time = 0 #time so far
     for page in line[:-1]:
-        tot_time += page[1]
+        tot_time += page[1] # number of seconds spent is key, the value is histogram
     if tot_time in tot_times: # record how total times correlate with buy / no buy
         if line[-1]: tot_times[tot_time][True] += 1 #buy
         else: tot_times[tot_time][False] += 1  #no buy
@@ -52,17 +53,18 @@ for line in data:
 p_buy_sum = 0
 max_time = 0
 for time in tot_times:
-    if (tot_times[time][False] or tot_times[time][True]):
-        p_buy_sum += tot_times[time][True] / float(( tot_times[time][False] + tot_times[time][True] ))
+    print tot_times
+#if (tot_times[time][False] or tot_times[time][True]):
+#       p_buy_sum += tot_times[time][True] / float(( tot_times[time][False] + tot_times[time][True] ))
     if (time > max_time):
         max_time = time
 p_buy = p_buy_sum / len(tot_times)
-# p_buy = 0.23365578
+# p_buy = 0.23365578 on training data
 
 # bin the data to make analysis easier
-bin_size = 50
+BIN_SIZE = 50
 binned = []
-for j in range (0,1+(max_time/ bin_size)):
+for j in range (0,1+(max_time/ BIN_SIZE)):
     binned.append([j,0,0])
 for time in tot_times:
     binned[time/bin_size][1] += tot_times[time][True] 
@@ -91,11 +93,14 @@ pylab.legend()
 # uncomment the line below to show the plot
 pylab.show()
 
-# The preliminary analysis indicates that users with session total time (first 8 pages) 
-#between 150 and 3750 seconds are ~10% more likely to buy than the overall average  
+### The preliminary analysis indicates users with session total time (first 8 pages) 
+# between 150 and 3750 seconds are ~10% more likely to buy than the overall average. 
+# 
 # A crude classifier computes session total time and: 
 # 1. if the total session time is between 150 and 3750 s, p_buy = 0.35
-# 2. else, p_buy = 0.23 
+### 2. else, p_buy = 0.23 
+
+# Write prediction data to output file
 
 if len(sys.argv) > 1:  # The syntax is : # <script> <test> <marked_test>
     out = open(sys.argv[2], 'w')

@@ -3,17 +3,17 @@
 # The data is given as 8 sequential pairs of site - time spent (s)
 # followed by a 0 (no buy) or 1 (buy)
 
-#strategies:
+# Strategies:
 
-# 1. Plot total time spent vs. p_buy and come up with rough rule
+# 1. Plot total time spent vs. p_buy and come up with rough rule (see Strat1.py)
 
+# This Script:
 # 2a. for each page compute p(b|p) = prob buy given page in history
-# then compute p(b|p') = prob buy given page ensemble
-
+# then compute p(b|p') = prob buy given page sequence.
 # 2b. compute p(b|p-p-p) = prob buy given page-page-page pattern
+# then compute p(b|p') = prob buy given page sequence.
 
-# 2a and 2b are implemented in this script - Strat1.py implements
-# strategy 1.
+# Note that both 2a and 2b assume 'events' are independent.
 
 import pylab
 import operator
