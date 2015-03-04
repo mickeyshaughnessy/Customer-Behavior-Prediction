@@ -1,11 +1,19 @@
 # Customer-Behavior-Prediction
-These scripts are used to predict wether a website customer will make a purchase based on their browsing history
 
+
+These scripts are used to predict wether a website customer will make a purchase in an online store 
+based on their browsing history. They could be used as part of a realtime webpage control system 
+in order to improve customer purchase behavior. The system would compute the buying probability
+given the current customer history combined with each of several possible webpage responses.
+The best response say, 'make button b larger and display ad C') would be actually executed.
+
+The learning component could be periodically run offline on historical data
+                                                                        
 This directory contains the data files, scripts, outputs and plots. 
 
 Strategies
 ----------
-There are three learning strategies - one (1) based simply on total time the 
+There are three learning strategies implemented - one (1) based simply on total time the 
 user spends on the webpage; the other two based on a Naive Bayes classifier
 approach, using either the individual pages (2a) visited or the sequences of 3 
 pages (2b) visited.
