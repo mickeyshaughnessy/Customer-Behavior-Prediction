@@ -2,12 +2,12 @@
 
 
 These scripts are used to predict wether a website customer will make a purchase in an online store 
-based on their browsing history. They could be used as part of a realtime webpage control system 
-in order to improve customer purchase behavior. The system would compute the buying probability
-given the current customer history combined with each of several possible webpage responses.
-The best response say, 'make button b larger and display ad C') would be actually executed.
+based on their browsing history. They are components in a realtime webpage control system 
+that systematically influences customer purchase behavior. The system computes the buying probability
+given the current customer history combined with each of several possible webpage responses from the system.
+The best response say, 'make button b larger and display ad C') would usually be actually executed.
 
-The learning component could be periodically run offline on historical data
+The learning component can be periodically run offline or in streaming online mode, on historical data
                                                                         
 This directory contains the data files, scripts, outputs and plots. 
 
@@ -18,8 +18,7 @@ user spends on the webpage; the other two based on a Naive Bayes classifier
 approach, using either the individual pages (2a) visited or the sequences of 3 
 pages (2b) visited.
 
-Strategy 2b has the greatest area under the precision - recall curve, so this one is the
-best of the three. Its results marking the `test.csv` data are in `predict2b.dat`. 
+Strategy 2b has the greatest area under the precision - recall curve. Its results marking the `test.csv` data are in `predict2b.dat`. 
 
 Probability of Buy
 -----------------
